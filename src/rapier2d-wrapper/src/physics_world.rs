@@ -489,6 +489,7 @@ pub extern "C" fn world_destroy(world_handle : Handle) {
 pub extern "C" fn world_step(world_handle : Handle, settings : &SimulationSettings) {
 	let mut physics_engine = singleton().lock().unwrap();
 	let physics_world = physics_engine.get_world(world_handle);
+	
 	physics_world.step(settings);
 }
 

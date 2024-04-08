@@ -1,6 +1,8 @@
 #include "rapier_direct_space_state_2d.h"
+#include "../rapier_include.h"
 
 int RapierDirectSpaceState2D::_intersect_point(const Vector2 &position, uint64_t canvas_instance_id, uint32_t collision_mask, bool collide_with_bodies, bool collide_with_areas, PhysicsServer2DExtensionShapeResult *r_results, int32_t p_result_max) {
+	LOG_FUNCTION_CALL("_intersect_point")
 	ERR_FAIL_COND_V(space->locked, 0);
 	ERR_FAIL_COND_V(!is_handle_valid(space->handle), 0);
 	ERR_FAIL_COND_V(p_result_max < 0, 0);
@@ -38,6 +40,7 @@ int RapierDirectSpaceState2D::_intersect_point(const Vector2 &position, uint64_t
 }
 
 bool RapierDirectSpaceState2D::_intersect_ray(const Vector2 &from, const Vector2 &to, uint32_t collision_mask, bool collide_with_bodies, bool collide_with_areas, bool hit_from_inside, PhysicsServer2DExtensionRayResult *r_result) {
+	LOG_FUNCTION_CALL("_intersect_ray")
 	ERR_FAIL_COND_V(space->locked, false);
 	ERR_FAIL_COND_V(!is_handle_valid(space->handle), false);
 
@@ -90,6 +93,7 @@ bool RapierDirectSpaceState2D::_intersect_ray(const Vector2 &from, const Vector2
 }
 
 bool RapierDirectSpaceState2D::_cast_motion(const RID &shape_rid, const Transform2D &transform, const Vector2 &motion, double margin, uint32_t collision_mask, bool collide_with_bodies, bool collide_with_areas, float *p_closest_safe, float *p_closest_unsafe) {
+	LOG_FUNCTION_CALL("_cast_motion")
 	RapierShape2D *shape = space->get_shape_from_rid(shape_rid);
 	ERR_FAIL_COND_V(!shape, false);
 	rapier2d::Handle shape_handle = shape->get_rapier_shape();
@@ -107,6 +111,7 @@ bool RapierDirectSpaceState2D::_cast_motion(const RID &shape_rid, const Transfor
 }
 
 bool RapierDirectSpaceState2D::_collide_shape(const RID &shape_rid, const Transform2D &transform, const Vector2 &motion, double margin, uint32_t collision_mask, bool collide_with_bodies, bool collide_with_areas, void *results, int32_t max_results, int32_t *result_count) {
+	LOG_FUNCTION_CALL("_collide_shape")
 	RapierShape2D *shape = space->get_shape_from_rid(shape_rid);
 	ERR_FAIL_COND_V(!shape, false);
 	rapier2d::Handle shape_handle = shape->get_rapier_shape();
@@ -141,6 +146,7 @@ bool RapierDirectSpaceState2D::_collide_shape(const RID &shape_rid, const Transf
 }
 
 int RapierDirectSpaceState2D::_intersect_shape(const RID &shape_rid, const Transform2D &transform, const Vector2 &motion, double margin, uint32_t collision_mask, bool collide_with_bodies, bool collide_with_areas, PhysicsServer2DExtensionShapeResult *r_results, int32_t p_result_max) {
+	LOG_FUNCTION_CALL("_intersect_shape")
 	RapierShape2D *shape = space->get_shape_from_rid(shape_rid);
 	ERR_FAIL_COND_V(!shape, false);
 	rapier2d::Handle shape_handle = shape->get_rapier_shape();
@@ -179,6 +185,7 @@ int RapierDirectSpaceState2D::_intersect_shape(const RID &shape_rid, const Trans
 }
 
 bool RapierDirectSpaceState2D::_rest_info(const RID &shape_rid, const Transform2D &transform, const Vector2 &motion, double margin, uint32_t collision_mask, bool collide_with_bodies, bool collide_with_areas, PhysicsServer2DExtensionShapeRestInfo *r_info) {
+	LOG_FUNCTION_CALL("_rest_info")
 	RapierShape2D *shape = space->get_shape_from_rid(shape_rid);
 	ERR_FAIL_COND_V(!shape, false);
 	rapier2d::Handle shape_handle = shape->get_rapier_shape();

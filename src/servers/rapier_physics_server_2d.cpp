@@ -62,56 +62,68 @@ RID RapierPhysicsServer2D::_shape_create(ShapeType p_shape) {
 }
 
 RID RapierPhysicsServer2D::_world_boundary_shape_create() {
+	LOG_FUNCTION_CALL("_world_boundary_shape_create")
 	return _shape_create(SHAPE_WORLD_BOUNDARY);
 }
 
 RID RapierPhysicsServer2D::_separation_ray_shape_create() {
+	LOG_FUNCTION_CALL("_separation_ray_shape_create")
 	return _shape_create(SHAPE_SEPARATION_RAY);
 }
 
 RID RapierPhysicsServer2D::_segment_shape_create() {
+	LOG_FUNCTION_CALL("_segment_shape_create")
 	return _shape_create(SHAPE_SEGMENT);
 }
 
 RID RapierPhysicsServer2D::_circle_shape_create() {
+	LOG_FUNCTION_CALL("_circle_shape_create")
 	return _shape_create(SHAPE_CIRCLE);
 }
 
 RID RapierPhysicsServer2D::_rectangle_shape_create() {
+	LOG_FUNCTION_CALL("_rectangle_shape_create")
 	return _shape_create(SHAPE_RECTANGLE);
 }
 
 RID RapierPhysicsServer2D::_capsule_shape_create() {
+	LOG_FUNCTION_CALL("_capsule_shape_create")
 	return _shape_create(SHAPE_CAPSULE);
 }
 
 RID RapierPhysicsServer2D::_convex_polygon_shape_create() {
+	LOG_FUNCTION_CALL("_convex_polygon_shape_create")
 	return _shape_create(SHAPE_CONVEX_POLYGON);
 }
 
 RID RapierPhysicsServer2D::_concave_polygon_shape_create() {
+	LOG_FUNCTION_CALL("_concave_polygon_shape_create")
 	return _shape_create(SHAPE_CONCAVE_POLYGON);
 }
 
 void RapierPhysicsServer2D::_shape_set_data(const RID &p_shape, const Variant &p_data) {
+	LOG_FUNCTION_CALL("_shape_set_data")
 	RapierShape2D *shape = shape_owner.get_or_null(p_shape);
 	ERR_FAIL_COND(!shape);
 	shape->set_data(p_data);
 };
 
 void RapierPhysicsServer2D::_shape_set_custom_solver_bias(const RID &p_shape, double p_bias) {
+	LOG_FUNCTION_CALL("_shape_set_custom_solver_bias")
 	if (p_bias != 0.0) {
 		WARN_PRINT_ONCE("Shape custom solver bias is not supported with Rapier");
 	}
 }
 
 PhysicsServer2D::ShapeType RapierPhysicsServer2D::_shape_get_type(const RID &p_shape) const {
+	LOG_FUNCTION_CALL("_shape_get_type")
 	const RapierShape2D *shape = shape_owner.get_or_null(p_shape);
 	ERR_FAIL_COND_V(!shape, SHAPE_CUSTOM);
 	return shape->get_type();
 };
 
 Variant RapierPhysicsServer2D::_shape_get_data(const RID &p_shape) const {
+	LOG_FUNCTION_CALL("_shape_get_data")
 	const RapierShape2D *shape = shape_owner.get_or_null(p_shape);
 	ERR_FAIL_COND_V(!shape, Variant());
 	ERR_FAIL_COND_V(!shape->is_configured(), Variant());
@@ -119,10 +131,12 @@ Variant RapierPhysicsServer2D::_shape_get_data(const RID &p_shape) const {
 };
 
 double RapierPhysicsServer2D::_shape_get_custom_solver_bias(const RID &p_shape) const {
+	LOG_FUNCTION_CALL("_shape_get_custom_solver_bias")
 	return 0.0;
 }
 
 bool RapierPhysicsServer2D::_shape_collide(const RID &p_shape_A, const Transform2D &p_xform_A, const Vector2 &p_motion_A, const RID &p_shape_B, const Transform2D &p_xform_B, const Vector2 &p_motion_B, void *r_results, int32_t p_result_max, int32_t *p_result_count) {
+	LOG_FUNCTION_CALL("_shape_collide")
 	RapierShape2D *shape_A = shape_owner.get_or_null(p_shape_A);
 	ERR_FAIL_COND_V(!shape_A, false);
 	RapierShape2D *shape_B = shape_owner.get_or_null(p_shape_B);
@@ -155,6 +169,7 @@ bool RapierPhysicsServer2D::_shape_collide(const RID &p_shape_A, const Transform
 }
 
 RID RapierPhysicsServer2D::_space_create() {
+	LOG_FUNCTION_CALL("_space_create")
 	RapierSpace2D *space = memnew(RapierSpace2D);
 	RID id = space_owner.make_rid(space);
 	space->set_rid(id);
@@ -169,6 +184,7 @@ RID RapierPhysicsServer2D::_space_create() {
 };
 
 void RapierPhysicsServer2D::_space_set_active(const RID &p_space, bool p_active) {
+	LOG_FUNCTION_CALL("_space_set_active")
 	RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND(!space);
 	if (p_active) {
@@ -179,6 +195,7 @@ void RapierPhysicsServer2D::_space_set_active(const RID &p_space, bool p_active)
 }
 
 bool RapierPhysicsServer2D::_space_is_active(const RID &p_space) const {
+	LOG_FUNCTION_CALL("_space_is_active")
 	RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND_V(!space, false);
 
@@ -186,6 +203,7 @@ bool RapierPhysicsServer2D::_space_is_active(const RID &p_space) const {
 }
 
 void RapierPhysicsServer2D::_space_set_param(const RID &p_space, SpaceParameter p_param, double p_value) {
+	LOG_FUNCTION_CALL("_space_set_param")
 	RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND(!space);
 
@@ -193,30 +211,35 @@ void RapierPhysicsServer2D::_space_set_param(const RID &p_space, SpaceParameter 
 }
 
 double RapierPhysicsServer2D::_space_get_param(const RID &p_space, SpaceParameter p_param) const {
+	LOG_FUNCTION_CALL("_space_get_param")
 	const RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND_V(!space, 0);
 	return space->get_param(p_param);
 }
 
 void RapierPhysicsServer2D::_space_set_debug_contacts(const RID &p_space, int p_max_contacts) {
+	LOG_FUNCTION_CALL("_space_set_debug_contacts")
 	RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND(!space);
 	space->set_debug_contacts(p_max_contacts);
 }
 
 PackedVector2Array RapierPhysicsServer2D::_space_get_contacts(const RID &p_space) const {
+	LOG_FUNCTION_CALL("_space_get_contacts")
 	RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND_V(!space, PackedVector2Array());
 	return space->get_debug_contacts();
 }
 
 int RapierPhysicsServer2D::_space_get_contact_count(const RID &p_space) const {
+	LOG_FUNCTION_CALL("_space_get_contact_count")
 	RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND_V(!space, 0);
 	return space->get_debug_contact_count();
 }
 
 PhysicsDirectSpaceState2D *RapierPhysicsServer2D::_space_get_direct_state(const RID &p_space) {
+	LOG_FUNCTION_CALL("_space_get_direct_state")
 	RapierSpace2D *space = space_owner.get_or_null(p_space);
 	ERR_FAIL_COND_V(!space, nullptr);
 	ERR_FAIL_COND_V_MSG((using_threads && !doing_sync) || space->is_locked(), nullptr, "Space state is inaccessible right now, wait for iteration or physics process notification.");
@@ -225,6 +248,7 @@ PhysicsDirectSpaceState2D *RapierPhysicsServer2D::_space_get_direct_state(const 
 }
 
 RID RapierPhysicsServer2D::_area_create() {
+	LOG_FUNCTION_CALL("_area_create")
 	RapierArea2D *area = memnew(RapierArea2D);
 
 	RID rid = area_owner.make_rid(area);
@@ -234,6 +258,7 @@ RID RapierPhysicsServer2D::_area_create() {
 }
 
 void RapierPhysicsServer2D::_area_set_space(const RID &p_area, const RID &p_space) {
+	LOG_FUNCTION_CALL("_area_set_space")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -251,6 +276,7 @@ void RapierPhysicsServer2D::_area_set_space(const RID &p_area, const RID &p_spac
 }
 
 RID RapierPhysicsServer2D::_area_get_space(const RID &p_area) const {
+	LOG_FUNCTION_CALL("_area_get_space")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, RID());
 
@@ -262,6 +288,7 @@ RID RapierPhysicsServer2D::_area_get_space(const RID &p_area) const {
 }
 
 void RapierPhysicsServer2D::_area_add_shape(const RID &p_area, const RID &p_shape, const Transform2D &p_transform, bool p_disabled) {
+	LOG_FUNCTION_CALL("_area_add_shape")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -272,6 +299,7 @@ void RapierPhysicsServer2D::_area_add_shape(const RID &p_area, const RID &p_shap
 }
 
 void RapierPhysicsServer2D::_area_set_shape(const RID &p_area, int p_shape_idx, const RID &p_shape) {
+	LOG_FUNCTION_CALL("_area_set_shape")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -283,6 +311,7 @@ void RapierPhysicsServer2D::_area_set_shape(const RID &p_area, int p_shape_idx, 
 }
 
 void RapierPhysicsServer2D::_area_set_shape_transform(const RID &p_area, int p_shape_idx, const Transform2D &p_transform) {
+	LOG_FUNCTION_CALL("_area_set_shape_transform")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -290,6 +319,7 @@ void RapierPhysicsServer2D::_area_set_shape_transform(const RID &p_area, int p_s
 }
 
 void RapierPhysicsServer2D::_area_set_shape_disabled(const RID &p_area, int p_shape, bool p_disabled) {
+	LOG_FUNCTION_CALL("_area_set_shape_disabled")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 	ERR_FAIL_INDEX(p_shape, area->get_shape_count());
@@ -299,6 +329,7 @@ void RapierPhysicsServer2D::_area_set_shape_disabled(const RID &p_area, int p_sh
 }
 
 int RapierPhysicsServer2D::_area_get_shape_count(const RID &p_area) const {
+	LOG_FUNCTION_CALL("_area_get_shape_count")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, -1);
 
@@ -306,6 +337,7 @@ int RapierPhysicsServer2D::_area_get_shape_count(const RID &p_area) const {
 }
 
 RID RapierPhysicsServer2D::_area_get_shape(const RID &p_area, int p_shape_idx) const {
+	LOG_FUNCTION_CALL("_area_get_shape")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, RID());
 
@@ -316,6 +348,7 @@ RID RapierPhysicsServer2D::_area_get_shape(const RID &p_area, int p_shape_idx) c
 }
 
 Transform2D RapierPhysicsServer2D::_area_get_shape_transform(const RID &p_area, int p_shape_idx) const {
+	LOG_FUNCTION_CALL("_area_get_shape_transform")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, Transform2D());
 
@@ -323,6 +356,7 @@ Transform2D RapierPhysicsServer2D::_area_get_shape_transform(const RID &p_area, 
 }
 
 void RapierPhysicsServer2D::_area_remove_shape(const RID &p_area, int p_shape_idx) {
+	LOG_FUNCTION_CALL("_area_remove_shape")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -330,6 +364,7 @@ void RapierPhysicsServer2D::_area_remove_shape(const RID &p_area, int p_shape_id
 }
 
 void RapierPhysicsServer2D::_area_clear_shapes(const RID &p_area) {
+	LOG_FUNCTION_CALL("_area_clear_shapes")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -339,30 +374,35 @@ void RapierPhysicsServer2D::_area_clear_shapes(const RID &p_area) {
 }
 
 void RapierPhysicsServer2D::_area_attach_object_instance_id(const RID &p_area, uint64_t p_id) {
+	LOG_FUNCTION_CALL("_area_attach_object_instance_id")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 	area->set_instance_id(ObjectID(p_id));
 }
 
 uint64_t RapierPhysicsServer2D::_area_get_object_instance_id(const RID &p_area) const {
+	LOG_FUNCTION_CALL("_area_get_object_instance_id")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, 0);
 	return area->get_instance_id();
 }
 
 void RapierPhysicsServer2D::_area_attach_canvas_instance_id(const RID &p_area, uint64_t p_id) {
+	LOG_FUNCTION_CALL("_area_attach_canvas_instance_id")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 	area->set_canvas_instance_id(ObjectID(p_id));
 }
 
 uint64_t RapierPhysicsServer2D::_area_get_canvas_instance_id(const RID &p_area) const {
+	LOG_FUNCTION_CALL("_area_get_canvas_instance_id")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, 0);
 	return area->get_canvas_instance_id();
 }
 
 void RapierPhysicsServer2D::_area_set_param(const RID &p_area, AreaParameter p_param, const Variant &p_value) {
+	LOG_FUNCTION_CALL("_area_set_param")
 	if (space_owner.owns(p_area)) {
 		RapierSpace2D *space = space_owner.get_or_null(p_area);
 		ERR_FAIL_COND(!space);
@@ -375,12 +415,14 @@ void RapierPhysicsServer2D::_area_set_param(const RID &p_area, AreaParameter p_p
 };
 
 void RapierPhysicsServer2D::_area_set_transform(const RID &p_area, const Transform2D &p_transform) {
+	LOG_FUNCTION_CALL("_area_set_transform")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 	area->set_transform(p_transform);
 };
 
 Variant RapierPhysicsServer2D::_area_get_param(const RID &p_area, AreaParameter p_param) const {
+	LOG_FUNCTION_CALL("_area_get_param")
 	if (space_owner.owns(p_area)) {
 		RapierSpace2D *space = space_owner.get_or_null(p_area);
 		ERR_FAIL_COND_V(!space, Variant());
@@ -393,6 +435,7 @@ Variant RapierPhysicsServer2D::_area_get_param(const RID &p_area, AreaParameter 
 };
 
 Transform2D RapierPhysicsServer2D::_area_get_transform(const RID &p_area) const {
+	LOG_FUNCTION_CALL("_area_get_transform")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, Transform2D());
 
@@ -400,12 +443,14 @@ Transform2D RapierPhysicsServer2D::_area_get_transform(const RID &p_area) const 
 };
 
 void RapierPhysicsServer2D::_area_set_pickable(const RID &p_area, bool p_pickable) {
+	LOG_FUNCTION_CALL("_area_set_pickable")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 	area->set_pickable(p_pickable);
 }
 
 void RapierPhysicsServer2D::_area_set_monitorable(const RID &p_area, bool p_monitorable) {
+	LOG_FUNCTION_CALL("_area_set_monitorable")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 	FLUSH_QUERY_CHECK(area);
@@ -414,6 +459,7 @@ void RapierPhysicsServer2D::_area_set_monitorable(const RID &p_area, bool p_moni
 }
 
 void RapierPhysicsServer2D::_area_set_collision_mask(const RID &p_area, uint32_t p_mask) {
+	LOG_FUNCTION_CALL("_area_set_collision_mask")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -421,6 +467,7 @@ void RapierPhysicsServer2D::_area_set_collision_mask(const RID &p_area, uint32_t
 }
 
 uint32_t RapierPhysicsServer2D::_area_get_collision_mask(const RID &p_area) const {
+	LOG_FUNCTION_CALL("_area_get_collision_mask")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, 0);
 
@@ -428,6 +475,7 @@ uint32_t RapierPhysicsServer2D::_area_get_collision_mask(const RID &p_area) cons
 }
 
 void RapierPhysicsServer2D::_area_set_collision_layer(const RID &p_area, uint32_t p_layer) {
+	LOG_FUNCTION_CALL("_area_set_collision_layer")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -435,6 +483,7 @@ void RapierPhysicsServer2D::_area_set_collision_layer(const RID &p_area, uint32_
 }
 
 uint32_t RapierPhysicsServer2D::_area_get_collision_layer(const RID &p_area) const {
+	LOG_FUNCTION_CALL("_area_get_collision_layer")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND_V(!area, 0);
 
@@ -442,6 +491,7 @@ uint32_t RapierPhysicsServer2D::_area_get_collision_layer(const RID &p_area) con
 }
 
 void RapierPhysicsServer2D::_area_set_monitor_callback(const RID &p_area, const Callable &p_callback) {
+	LOG_FUNCTION_CALL("_area_set_monitor_callback")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -449,6 +499,7 @@ void RapierPhysicsServer2D::_area_set_monitor_callback(const RID &p_area, const 
 }
 
 void RapierPhysicsServer2D::_area_set_area_monitor_callback(const RID &p_area, const Callable &p_callback) {
+	LOG_FUNCTION_CALL("_area_set_area_monitor_callback")
 	RapierArea2D *area = area_owner.get_or_null(p_area);
 	ERR_FAIL_COND(!area);
 
@@ -458,6 +509,7 @@ void RapierPhysicsServer2D::_area_set_area_monitor_callback(const RID &p_area, c
 /* BODY API */
 
 RID RapierPhysicsServer2D::_body_create() {
+	LOG_FUNCTION_CALL("_body_create")
 	RapierBody2D *body = memnew(RapierBody2D);
 	RID rid = body_owner.make_rid(body);
 	body->set_rid(rid);
@@ -468,6 +520,7 @@ RID RapierPhysicsServer2D::_body_create() {
  * Add the body in the physics space (world).
  */
 void RapierPhysicsServer2D::_body_set_space(const RID &p_body, const RID &p_space) {
+	LOG_FUNCTION_CALL("_body_set_space")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -481,6 +534,7 @@ void RapierPhysicsServer2D::_body_set_space(const RID &p_body, const RID &p_spac
 };
 
 RID RapierPhysicsServer2D::_body_get_space(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_space")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, RID());
 
@@ -493,6 +547,7 @@ RID RapierPhysicsServer2D::_body_get_space(const RID &p_body) const {
 };
 
 void RapierPhysicsServer2D::_body_set_mode(const RID &p_body, BodyMode p_mode) {
+	LOG_FUNCTION_CALL("_body_set_mode")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	FLUSH_QUERY_CHECK(body);
@@ -501,6 +556,7 @@ void RapierPhysicsServer2D::_body_set_mode(const RID &p_body, BodyMode p_mode) {
 };
 
 PhysicsServer2D::BodyMode RapierPhysicsServer2D::_body_get_mode(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_mode")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, BODY_MODE_STATIC);
 
@@ -508,6 +564,7 @@ PhysicsServer2D::BodyMode RapierPhysicsServer2D::_body_get_mode(const RID &p_bod
 };
 
 void RapierPhysicsServer2D::_body_add_shape(const RID &p_body, const RID &p_shape, const Transform2D &p_transform, bool p_disabled) {
+	LOG_FUNCTION_CALL("_body_add_shape")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -518,6 +575,7 @@ void RapierPhysicsServer2D::_body_add_shape(const RID &p_body, const RID &p_shap
 }
 
 void RapierPhysicsServer2D::_body_set_shape(const RID &p_body, int p_shape_idx, const RID &p_shape) {
+	LOG_FUNCTION_CALL("_body_set_shape")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -529,6 +587,7 @@ void RapierPhysicsServer2D::_body_set_shape(const RID &p_body, int p_shape_idx, 
 }
 
 void RapierPhysicsServer2D::_body_set_shape_transform(const RID &p_body, int p_shape_idx, const Transform2D &p_transform) {
+	LOG_FUNCTION_CALL("_body_set_shape_transform")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -536,6 +595,7 @@ void RapierPhysicsServer2D::_body_set_shape_transform(const RID &p_body, int p_s
 }
 
 int RapierPhysicsServer2D::_body_get_shape_count(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_shape_count")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, -1);
 
@@ -543,6 +603,7 @@ int RapierPhysicsServer2D::_body_get_shape_count(const RID &p_body) const {
 }
 
 RID RapierPhysicsServer2D::_body_get_shape(const RID &p_body, int p_shape_idx) const {
+	LOG_FUNCTION_CALL("_body_get_shape")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, RID());
 
@@ -553,6 +614,7 @@ RID RapierPhysicsServer2D::_body_get_shape(const RID &p_body, int p_shape_idx) c
 }
 
 Transform2D RapierPhysicsServer2D::_body_get_shape_transform(const RID &p_body, int p_shape_idx) const {
+	LOG_FUNCTION_CALL("_body_get_shape_transform")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, Transform2D());
 
@@ -560,6 +622,7 @@ Transform2D RapierPhysicsServer2D::_body_get_shape_transform(const RID &p_body, 
 }
 
 void RapierPhysicsServer2D::_body_remove_shape(const RID &p_body, int p_shape_idx) {
+	LOG_FUNCTION_CALL("_body_remove_shape")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -567,6 +630,7 @@ void RapierPhysicsServer2D::_body_remove_shape(const RID &p_body, int p_shape_id
 }
 
 void RapierPhysicsServer2D::_body_clear_shapes(const RID &p_body) {
+	LOG_FUNCTION_CALL("_body_clear_shapes")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -576,6 +640,7 @@ void RapierPhysicsServer2D::_body_clear_shapes(const RID &p_body) {
 }
 
 void RapierPhysicsServer2D::_body_set_shape_disabled(const RID &p_body, int p_shape_idx, bool p_disabled) {
+	LOG_FUNCTION_CALL("_body_set_shape_disabled")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	ERR_FAIL_INDEX(p_shape_idx, body->get_shape_count());
@@ -585,6 +650,7 @@ void RapierPhysicsServer2D::_body_set_shape_disabled(const RID &p_body, int p_sh
 }
 
 void RapierPhysicsServer2D::_body_set_shape_as_one_way_collision(const RID &p_body, int p_shape_idx, bool p_enable, double p_margin) {
+	LOG_FUNCTION_CALL("_body_set_shape_as_one_way_collision")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	ERR_FAIL_INDEX(p_shape_idx, body->get_shape_count());
@@ -594,12 +660,14 @@ void RapierPhysicsServer2D::_body_set_shape_as_one_way_collision(const RID &p_bo
 }
 
 void RapierPhysicsServer2D::_body_set_continuous_collision_detection_mode(const RID &p_body, CCDMode p_mode) {
+	LOG_FUNCTION_CALL("_body_set_continuous_collision_detection_mode")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	body->set_continuous_collision_detection_mode(p_mode);
 }
 
 RapierPhysicsServer2D::CCDMode RapierPhysicsServer2D::_body_get_continuous_collision_detection_mode(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_continuous_collision_detection_mode")
 	const RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, CCD_MODE_DISABLED);
 
@@ -607,6 +675,7 @@ RapierPhysicsServer2D::CCDMode RapierPhysicsServer2D::_body_get_continuous_colli
 }
 
 void RapierPhysicsServer2D::_body_attach_object_instance_id(const RID &p_body, uint64_t p_id) {
+	LOG_FUNCTION_CALL("_body_attach_object_instance_id")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -614,6 +683,7 @@ void RapierPhysicsServer2D::_body_attach_object_instance_id(const RID &p_body, u
 }
 
 uint64_t RapierPhysicsServer2D::_body_get_object_instance_id(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_object_instance_id")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 
@@ -621,6 +691,7 @@ uint64_t RapierPhysicsServer2D::_body_get_object_instance_id(const RID &p_body) 
 }
 
 void RapierPhysicsServer2D::_body_attach_canvas_instance_id(const RID &p_body, uint64_t p_id) {
+	LOG_FUNCTION_CALL("_body_attach_canvas_instance_id")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -628,6 +699,7 @@ void RapierPhysicsServer2D::_body_attach_canvas_instance_id(const RID &p_body, u
 }
 
 uint64_t RapierPhysicsServer2D::_body_get_canvas_instance_id(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_canvas_instance_id")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 
@@ -635,12 +707,14 @@ uint64_t RapierPhysicsServer2D::_body_get_canvas_instance_id(const RID &p_body) 
 }
 
 void RapierPhysicsServer2D::_body_set_collision_layer(const RID &p_body, uint32_t p_layer) {
+	LOG_FUNCTION_CALL("_body_set_collision_layer")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	body->set_collision_layer(p_layer);
 }
 
 uint32_t RapierPhysicsServer2D::_body_get_collision_layer(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_collision_layer")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 
@@ -648,12 +722,14 @@ uint32_t RapierPhysicsServer2D::_body_get_collision_layer(const RID &p_body) con
 }
 
 void RapierPhysicsServer2D::_body_set_collision_mask(const RID &p_body, uint32_t p_mask) {
+	LOG_FUNCTION_CALL("_body_set_collision_mask")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	body->set_collision_mask(p_mask);
 }
 
 uint32_t RapierPhysicsServer2D::_body_get_collision_mask(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_collision_mask")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 
@@ -661,6 +737,7 @@ uint32_t RapierPhysicsServer2D::_body_get_collision_mask(const RID &p_body) cons
 }
 
 void RapierPhysicsServer2D::_body_set_collision_priority(const RID &p_body, double p_priority) {
+	LOG_FUNCTION_CALL("_body_set_collision_priority")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -668,6 +745,7 @@ void RapierPhysicsServer2D::_body_set_collision_priority(const RID &p_body, doub
 }
 
 double RapierPhysicsServer2D::_body_get_collision_priority(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_collision_priority")
 	const RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 
@@ -675,6 +753,7 @@ double RapierPhysicsServer2D::_body_get_collision_priority(const RID &p_body) co
 }
 
 void RapierPhysicsServer2D::_body_set_param(const RID &p_body, BodyParameter p_param, const Variant &p_value) {
+	LOG_FUNCTION_CALL("_body_set_param")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -682,6 +761,7 @@ void RapierPhysicsServer2D::_body_set_param(const RID &p_body, BodyParameter p_p
 }
 
 Variant RapierPhysicsServer2D::_body_get_param(const RID &p_body, BodyParameter p_param) const {
+	LOG_FUNCTION_CALL("_body_get_param")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 
@@ -689,6 +769,7 @@ Variant RapierPhysicsServer2D::_body_get_param(const RID &p_body, BodyParameter 
 }
 
 void RapierPhysicsServer2D::_body_reset_mass_properties(const RID &p_body) {
+	LOG_FUNCTION_CALL("_body_reset_mass_properties")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -696,6 +777,7 @@ void RapierPhysicsServer2D::_body_reset_mass_properties(const RID &p_body) {
 }
 
 void RapierPhysicsServer2D::_body_set_state(const RID &p_body, BodyState p_state, const Variant &p_variant) {
+	LOG_FUNCTION_CALL("_body_set_state")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -703,6 +785,7 @@ void RapierPhysicsServer2D::_body_set_state(const RID &p_body, BodyState p_state
 }
 
 Variant RapierPhysicsServer2D::_body_get_state(const RID &p_body, BodyState p_state) const {
+	LOG_FUNCTION_CALL("_body_get_state")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, Variant());
 
@@ -710,6 +793,7 @@ Variant RapierPhysicsServer2D::_body_get_state(const RID &p_body, BodyState p_st
 }
 
 void RapierPhysicsServer2D::_body_apply_central_impulse(const RID &p_body, const Vector2 &p_impulse) {
+	LOG_FUNCTION_CALL("_body_apply_central_impulse")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -717,6 +801,7 @@ void RapierPhysicsServer2D::_body_apply_central_impulse(const RID &p_body, const
 }
 
 void RapierPhysicsServer2D::_body_apply_torque_impulse(const RID &p_body, double p_torque) {
+	LOG_FUNCTION_CALL("_body_apply_torque_impulse")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -724,6 +809,7 @@ void RapierPhysicsServer2D::_body_apply_torque_impulse(const RID &p_body, double
 }
 
 void RapierPhysicsServer2D::_body_apply_impulse(const RID &p_body, const Vector2 &p_impulse, const Vector2 &p_position) {
+	LOG_FUNCTION_CALL("_body_apply_impulse")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -731,6 +817,7 @@ void RapierPhysicsServer2D::_body_apply_impulse(const RID &p_body, const Vector2
 }
 
 void RapierPhysicsServer2D::_body_apply_central_force(const RID &p_body, const Vector2 &p_force) {
+	LOG_FUNCTION_CALL("_body_apply_central_force")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -738,6 +825,7 @@ void RapierPhysicsServer2D::_body_apply_central_force(const RID &p_body, const V
 }
 
 void RapierPhysicsServer2D::_body_apply_force(const RID &p_body, const Vector2 &p_force, const Vector2 &p_position) {
+	LOG_FUNCTION_CALL("_body_apply_force")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -745,6 +833,7 @@ void RapierPhysicsServer2D::_body_apply_force(const RID &p_body, const Vector2 &
 }
 
 void RapierPhysicsServer2D::_body_apply_torque(const RID &p_body, double p_torque) {
+	LOG_FUNCTION_CALL("_body_apply_torque")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -752,6 +841,7 @@ void RapierPhysicsServer2D::_body_apply_torque(const RID &p_body, double p_torqu
 }
 
 void RapierPhysicsServer2D::_body_add_constant_central_force(const RID &p_body, const Vector2 &p_force) {
+	LOG_FUNCTION_CALL("_body_add_constant_central_force")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -759,6 +849,7 @@ void RapierPhysicsServer2D::_body_add_constant_central_force(const RID &p_body, 
 }
 
 void RapierPhysicsServer2D::_body_add_constant_force(const RID &p_body, const Vector2 &p_force, const Vector2 &p_position) {
+	LOG_FUNCTION_CALL("_body_add_constant_force")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -766,6 +857,7 @@ void RapierPhysicsServer2D::_body_add_constant_force(const RID &p_body, const Ve
 }
 
 void RapierPhysicsServer2D::_body_add_constant_torque(const RID &p_body, double p_torque) {
+	LOG_FUNCTION_CALL("_body_add_constant_torque")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -773,6 +865,7 @@ void RapierPhysicsServer2D::_body_add_constant_torque(const RID &p_body, double 
 }
 
 void RapierPhysicsServer2D::_body_set_constant_force(const RID &p_body, const Vector2 &p_force) {
+	LOG_FUNCTION_CALL("_body_set_constant_force")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -780,6 +873,7 @@ void RapierPhysicsServer2D::_body_set_constant_force(const RID &p_body, const Ve
 }
 
 Vector2 RapierPhysicsServer2D::_body_get_constant_force(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_constant_force")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, Vector2());
 
@@ -787,6 +881,7 @@ Vector2 RapierPhysicsServer2D::_body_get_constant_force(const RID &p_body) const
 }
 
 void RapierPhysicsServer2D::_body_set_constant_torque(const RID &p_body, double p_torque) {
+	LOG_FUNCTION_CALL("_body_set_constant_torque")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -794,6 +889,7 @@ void RapierPhysicsServer2D::_body_set_constant_torque(const RID &p_body, double 
 }
 
 double RapierPhysicsServer2D::_body_get_constant_torque(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_constant_torque")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 
@@ -801,6 +897,7 @@ double RapierPhysicsServer2D::_body_get_constant_torque(const RID &p_body) const
 }
 
 void RapierPhysicsServer2D::_body_set_axis_velocity(const RID &p_body, const Vector2 &p_axis_velocity) {
+	LOG_FUNCTION_CALL("_body_set_axis_velocity")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -813,6 +910,7 @@ void RapierPhysicsServer2D::_body_set_axis_velocity(const RID &p_body, const Vec
 };
 
 void RapierPhysicsServer2D::_body_add_collision_exception(const RID &p_body, const RID &p_body_b) {
+	LOG_FUNCTION_CALL("_body_add_collision_exception")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -821,6 +919,7 @@ void RapierPhysicsServer2D::_body_add_collision_exception(const RID &p_body, con
 };
 
 void RapierPhysicsServer2D::_body_remove_collision_exception(const RID &p_body, const RID &p_body_b) {
+	LOG_FUNCTION_CALL("_body_remove_collision_exception")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -829,6 +928,7 @@ void RapierPhysicsServer2D::_body_remove_collision_exception(const RID &p_body, 
 };
 
 TypedArray<RID> RapierPhysicsServer2D::_body_get_collision_exceptions(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_collision_exceptions")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, TypedArray<RID>());
 
@@ -845,17 +945,20 @@ TypedArray<RID> RapierPhysicsServer2D::_body_get_collision_exceptions(const RID 
 };
 
 void RapierPhysicsServer2D::_body_set_contacts_reported_depth_threshold(const RID &p_body, double p_threshold) {
+	LOG_FUNCTION_CALL("_body_set_contacts_reported_depth_threshold")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 };
 
 double RapierPhysicsServer2D::_body_get_contacts_reported_depth_threshold(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_contacts_reported_depth_threshold")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, 0);
 	return 0;
 };
 
 void RapierPhysicsServer2D::_body_set_omit_force_integration(const RID &p_body, bool p_omit) {
+	LOG_FUNCTION_CALL("_body_set_omit_force_integration")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 
@@ -863,36 +966,42 @@ void RapierPhysicsServer2D::_body_set_omit_force_integration(const RID &p_body, 
 };
 
 bool RapierPhysicsServer2D::_body_is_omitting_force_integration(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_is_omitting_force_integration")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, false);
 	return body->get_omit_force_integration();
 };
 
 void RapierPhysicsServer2D::_body_set_max_contacts_reported(const RID &p_body, int p_contacts) {
+	LOG_FUNCTION_CALL("_body_set_max_contacts_reported")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	body->set_max_contacts_reported(p_contacts);
 }
 
 int RapierPhysicsServer2D::_body_get_max_contacts_reported(const RID &p_body) const {
+	LOG_FUNCTION_CALL("_body_get_max_contacts_reported")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, -1);
 	return body->get_max_contacts_reported();
 }
 
 void RapierPhysicsServer2D::_body_set_state_sync_callback(const RID &p_body, const Callable &p_callable) {
+	LOG_FUNCTION_CALL("_body_set_state_sync_callback")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	body->set_state_sync_callback(p_callable);
 }
 
 void RapierPhysicsServer2D::_body_set_force_integration_callback(const RID &p_body, const Callable &p_callable, const Variant &p_udata) {
+	LOG_FUNCTION_CALL("_body_set_force_integration_callback")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	body->set_force_integration_callback(p_callable, p_udata);
 }
 
 bool RapierPhysicsServer2D::_body_collide_shape(const RID &p_body, int32_t p_body_shape, const RID &p_shape, const Transform2D &p_shape_xform, const Vector2 &p_motion, void *r_results, int32_t p_result_max, int32_t *r_result_count) {
+	LOG_FUNCTION_CALL("_body_collide_shape")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, false);
 	ERR_FAIL_INDEX_V(p_body_shape, body->get_shape_count(), false);
@@ -901,12 +1010,14 @@ bool RapierPhysicsServer2D::_body_collide_shape(const RID &p_body, int32_t p_bod
 }
 
 void RapierPhysicsServer2D::_body_set_pickable(const RID &p_body, bool p_pickable) {
+	LOG_FUNCTION_CALL("_body_set_pickable")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND(!body);
 	body->set_pickable(p_pickable);
 }
 
 bool RapierPhysicsServer2D::_body_test_motion(const RID &p_body, const Transform2D &p_from, const Vector2 &p_motion, double p_margin, bool p_collide_separation_ray, bool p_recovery_as_collision, PhysicsServer2DExtensionMotionResult *r_result) const {
+	LOG_FUNCTION_CALL("_body_test_motion")
 	RapierBody2D *body = body_owner.get_or_null(p_body);
 	ERR_FAIL_COND_V(!body, false);
 	ERR_FAIL_COND_V(!body->get_space(), false);
@@ -916,6 +1027,7 @@ bool RapierPhysicsServer2D::_body_test_motion(const RID &p_body, const Transform
 }
 
 PhysicsDirectBodyState2D *RapierPhysicsServer2D::_body_get_direct_state(const RID &p_body) {
+	LOG_FUNCTION_CALL("_body_get_direct_state")
 	ERR_FAIL_COND_V_MSG((using_threads && !doing_sync), nullptr, "Body state is inaccessible right now, wait for iteration or physics process notification.");
 
 	if (!body_owner.owns(p_body)) {
@@ -937,6 +1049,7 @@ PhysicsDirectBodyState2D *RapierPhysicsServer2D::_body_get_direct_state(const RI
 /* JOINT API */
 
 RID RapierPhysicsServer2D::_joint_create() {
+	LOG_FUNCTION_CALL("_joint_create")
 	RapierJoint2D *joint = memnew(RapierJoint2D);
 	RID joint_rid = joint_owner.make_rid(joint);
 	joint->set_rid(joint_rid);
@@ -944,6 +1057,7 @@ RID RapierPhysicsServer2D::_joint_create() {
 }
 
 void RapierPhysicsServer2D::_joint_clear(const RID &p_joint) {
+	LOG_FUNCTION_CALL("_joint_clear")
 	RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	if (joint->get_type() != JOINT_TYPE_MAX) {
 		RapierJoint2D *empty_joint = memnew(RapierJoint2D);
@@ -955,6 +1069,7 @@ void RapierPhysicsServer2D::_joint_clear(const RID &p_joint) {
 }
 
 void RapierPhysicsServer2D::_joint_set_param(const RID &p_joint, JointParam p_param, double p_value) {
+	LOG_FUNCTION_CALL("_joint_set_param")
 	RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND(!joint);
 
@@ -972,6 +1087,7 @@ void RapierPhysicsServer2D::_joint_set_param(const RID &p_joint, JointParam p_pa
 }
 
 double RapierPhysicsServer2D::_joint_get_param(const RID &p_joint, JointParam p_param) const {
+	LOG_FUNCTION_CALL("_joint_get_param")
 	const RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND_V(!joint, -1);
 
@@ -990,6 +1106,7 @@ double RapierPhysicsServer2D::_joint_get_param(const RID &p_joint, JointParam p_
 }
 
 void RapierPhysicsServer2D::_joint_disable_collisions_between_bodies(const RID &p_joint, const bool p_disable) {
+	LOG_FUNCTION_CALL("_joint_disable_collisions_between_bodies")
 	RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND(!joint);
 
@@ -997,6 +1114,7 @@ void RapierPhysicsServer2D::_joint_disable_collisions_between_bodies(const RID &
 }
 
 bool RapierPhysicsServer2D::_joint_is_disabled_collisions_between_bodies(const RID &p_joint) const {
+	LOG_FUNCTION_CALL("_joint_is_disabled_collisions_between_bodies")
 	const RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND_V(!joint, true);
 
@@ -1004,6 +1122,7 @@ bool RapierPhysicsServer2D::_joint_is_disabled_collisions_between_bodies(const R
 }
 
 void RapierPhysicsServer2D::_joint_make_pin(const RID &p_joint, const Vector2 &p_pos, const RID &p_body_a, const RID &p_body_b) {
+	LOG_FUNCTION_CALL("_joint_make_pin")
 	RapierBody2D *A = body_owner.get_or_null(p_body_a);
 	ERR_FAIL_COND(!A);
 	RapierBody2D *B = nullptr;
@@ -1023,6 +1142,7 @@ void RapierPhysicsServer2D::_joint_make_pin(const RID &p_joint, const Vector2 &p
 }
 
 void RapierPhysicsServer2D::_joint_make_groove(const RID &p_joint, const Vector2 &p_a_groove1, const Vector2 &p_a_groove2, const Vector2 &p_b_anchor, const RID &p_body_a, const RID &p_body_b) {
+	LOG_FUNCTION_CALL("_joint_make_groove")
 	RapierBody2D *A = body_owner.get_or_null(p_body_a);
 	ERR_FAIL_COND(!A);
 
@@ -1040,6 +1160,7 @@ void RapierPhysicsServer2D::_joint_make_groove(const RID &p_joint, const Vector2
 }
 
 void RapierPhysicsServer2D::_joint_make_damped_spring(const RID &p_joint, const Vector2 &p_anchor_a, const Vector2 &p_anchor_b, const RID &p_body_a, const RID &p_body_b) {
+	LOG_FUNCTION_CALL("_joint_make_damped_spring")
 	RapierBody2D *A = body_owner.get_or_null(p_body_a);
 	ERR_FAIL_COND(!A);
 
@@ -1057,6 +1178,7 @@ void RapierPhysicsServer2D::_joint_make_damped_spring(const RID &p_joint, const 
 }
 
 void RapierPhysicsServer2D::_pin_joint_set_flag(const RID &p_joint, PhysicsServer2D::PinJointFlag p_flag, bool p_enabled) {
+	LOG_FUNCTION_CALL("_pin_joint_set_flag")
 	RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_NULL(joint);
 	ERR_FAIL_COND(joint->get_type() != JOINT_TYPE_PIN);
@@ -1066,6 +1188,7 @@ void RapierPhysicsServer2D::_pin_joint_set_flag(const RID &p_joint, PhysicsServe
 }
 
 bool RapierPhysicsServer2D::_pin_joint_get_flag(const RID &p_joint, PhysicsServer2D::PinJointFlag p_flag) const {
+	LOG_FUNCTION_CALL("_pin_joint_get_flag")
 	RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_NULL_V(joint, 0);
 	ERR_FAIL_COND_V(joint->get_type() != JOINT_TYPE_PIN, 0);
@@ -1075,6 +1198,7 @@ bool RapierPhysicsServer2D::_pin_joint_get_flag(const RID &p_joint, PhysicsServe
 }
 
 void RapierPhysicsServer2D::_pin_joint_set_param(const RID &p_joint, PinJointParam p_param, double p_value) {
+	LOG_FUNCTION_CALL("_pin_joint_set_param")
 	RapierJoint2D *j = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND(!j);
 	ERR_FAIL_COND(j->get_type() != JOINT_TYPE_PIN);
@@ -1084,6 +1208,7 @@ void RapierPhysicsServer2D::_pin_joint_set_param(const RID &p_joint, PinJointPar
 }
 
 double RapierPhysicsServer2D::_pin_joint_get_param(const RID &p_joint, PinJointParam p_param) const {
+	LOG_FUNCTION_CALL("_pin_joint_get_param")
 	RapierJoint2D *j = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND_V(!j, 0);
 	ERR_FAIL_COND_V(j->get_type() != JOINT_TYPE_PIN, 0);
@@ -1093,6 +1218,7 @@ double RapierPhysicsServer2D::_pin_joint_get_param(const RID &p_joint, PinJointP
 }
 
 void RapierPhysicsServer2D::_damped_spring_joint_set_param(const RID &p_joint, DampedSpringParam p_param, double p_value) {
+	LOG_FUNCTION_CALL("_damped_spring_joint_set_param")
 	RapierJoint2D *j = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND(!j);
 	ERR_FAIL_COND(j->get_type() != JOINT_TYPE_DAMPED_SPRING);
@@ -1102,6 +1228,7 @@ void RapierPhysicsServer2D::_damped_spring_joint_set_param(const RID &p_joint, D
 }
 
 double RapierPhysicsServer2D::_damped_spring_joint_get_param(const RID &p_joint, DampedSpringParam p_param) const {
+	LOG_FUNCTION_CALL("_damped_spring_joint_get_param")
 	RapierJoint2D *j = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND_V(!j, 0);
 	ERR_FAIL_COND_V(j->get_type() != JOINT_TYPE_DAMPED_SPRING, 0);
@@ -1111,6 +1238,7 @@ double RapierPhysicsServer2D::_damped_spring_joint_get_param(const RID &p_joint,
 }
 
 PhysicsServer2D::JointType RapierPhysicsServer2D::_joint_get_type(const RID &p_joint) const {
+	LOG_FUNCTION_CALL("_joint_get_type")
 	RapierJoint2D *joint = joint_owner.get_or_null(p_joint);
 	ERR_FAIL_COND_V(!joint, JOINT_TYPE_PIN);
 
@@ -1118,6 +1246,7 @@ PhysicsServer2D::JointType RapierPhysicsServer2D::_joint_get_type(const RID &p_j
 }
 
 void RapierPhysicsServer2D::_free_rid(const RID &p_rid) {
+	LOG_FUNCTION_CALL("_free_rid")
 	if (shape_owner.owns(p_rid)) {
 		RapierShape2D *shape = shape_owner.get_or_null(p_rid);
 
@@ -1174,14 +1303,17 @@ void RapierPhysicsServer2D::_free_rid(const RID &p_rid) {
 }
 
 void RapierPhysicsServer2D::_set_active(bool p_active) {
+	LOG_FUNCTION_CALL("_set_active")
 	active = p_active;
 }
 
 void RapierPhysicsServer2D::_init() {
+	LOG_FUNCTION_CALL("_init")
 	doing_sync = false;
 }
 
 void RapierPhysicsServer2D::_step(double p_step) {
+	LOG_FUNCTION_CALL("_step")
 	if (!active) {
 		return;
 	}
@@ -1201,6 +1333,7 @@ void RapierPhysicsServer2D::_step(double p_step) {
 }
 
 void RapierPhysicsServer2D::_sync() {
+	LOG_FUNCTION_CALL("_sync")
 	doing_sync = true;
 }
 
@@ -1208,6 +1341,7 @@ void RapierPhysicsServer2D::_sync() {
  * Synchronize the infos (like transforms) from the rapier to Godot nodes/script.
  */
 void RapierPhysicsServer2D::_flush_queries() {
+	LOG_FUNCTION_CALL("_flush_queries")
 	if (!active) {
 		return;
 	}
@@ -1258,13 +1392,16 @@ void RapierPhysicsServer2D::_flush_queries() {
 }
 
 void RapierPhysicsServer2D::_end_sync() {
+	LOG_FUNCTION_CALL("_end_sync")
 	doing_sync = false;
 }
 
 void RapierPhysicsServer2D::_finish() {
+	LOG_FUNCTION_CALL("_finish")
 }
 
 int RapierPhysicsServer2D::_get_process_info(ProcessInfo p_info) {
+	LOG_FUNCTION_CALL("_get_process_info")
 	switch (p_info) {
 		case INFO_ACTIVE_OBJECTS: {
 			return active_objects;
@@ -1283,6 +1420,7 @@ int RapierPhysicsServer2D::_get_process_info(ProcessInfo p_info) {
 RapierPhysicsServer2D *RapierPhysicsServer2D::singleton = nullptr;
 
 RapierPhysicsServer2D::RapierPhysicsServer2D(bool p_using_threads) {
+	LOG_FUNCTION_CALL("RapierPhysicsServer2D")
 	singleton = this;
 
 	using_threads = p_using_threads;

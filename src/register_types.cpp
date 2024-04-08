@@ -28,8 +28,10 @@ using namespace godot;
 static RapierPhysicsServer2DFactory *rapier_2d_factory = nullptr;
 
 void initialize_rapier_2d_module(ModuleInitializationLevel p_level) {
+	LOG_FUNCTION_CALL("initialize_rapier_2d_module")
 	switch (p_level) {
 		case MODULE_INITIALIZATION_LEVEL_SERVERS: {
+			LOG_FUNCTION_CALL("initialize servers")
 			ClassDB::register_class<RapierDirectBodyState2D>(true);
 			ClassDB::register_class<RapierDirectSpaceState2D>(true);
 			ClassDB::register_class<RapierPhysicsServer2D>();
@@ -39,14 +41,17 @@ void initialize_rapier_2d_module(ModuleInitializationLevel p_level) {
 			PhysicsServer2DManager::get_singleton()->register_server("Rapier2D", Callable(rapier_2d_factory, "create_rapier_2d_callback"));
 		} break;
 		case MODULE_INITIALIZATION_LEVEL_SCENE: {
+			LOG_FUNCTION_CALL("initialize level")
 			RapierProjectSettings::register_settings();
 		} break;
 		default: {
 		} break;
 	}
+	LOG_FUNCTION_CALL("done")
 }
 
 void uninitialize_rapier_2d_module(ModuleInitializationLevel p_level) {
+	LOG_FUNCTION_CALL("uninitialize_rapier_2d_module")
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SERVERS) {
 		return;
 	}

@@ -304,6 +304,7 @@ protected:
 
 public:
 	PhysicsServer2D *_create_rapier_2d_callback() {
+		LOG_FUNCTION_CALL("_create_rapier_2d_callback")
 		PhysicsServer2D *physics_server_2d = memnew(RapierPhysicsServer2D());
 		return physics_server_2d;
 	}

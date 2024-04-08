@@ -5,8 +5,11 @@
 
 #include <godot_cpp/templates/hashfuncs.hpp>
 #include <godot_cpp/variant/transform2d.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
+
+#define LOG_FUNCTION_CALL(function_name) 0; //UtilityFunctions::print("Function call: " + String(function_name));
 
 namespace rapier2d {
 
