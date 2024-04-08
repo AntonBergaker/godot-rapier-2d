@@ -1,7 +1,8 @@
 cd src/rapier2d-wrapper
 rmdir target/release
 export RUSTFLAGS="-C target-feature=+atomics,+bulk-memory"
-cargo +nightly build --release --features="single" --target=wasm32-unknown-emscripten -Z build-std=panic_abort,std
+#export EMCC_FORCE_STDLIBS=1
+cargo +nightly build --release --features="single,wasm-bindgen" --target=wasm32-unknown-emscripten -Z build-std=panic_abort,std
 mv target/wasm32-unknown-emscripten/release/librapier2d_wrapper.a target/release/librapier2d_wrapper.a
 mv target/wasm32-unknown-emscripten/release/librapier2d_wrapper.d target/release/librapier2d_wrapper.d
 cd ../..

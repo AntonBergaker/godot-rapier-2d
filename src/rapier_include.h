@@ -9,7 +9,7 @@
 
 using namespace godot;
 
-#define LOG_FUNCTION_CALL(function_name) 0; //UtilityFunctions::print("Function call: " + String(function_name));
+#define LOG_FUNCTION_CALL(function_name) UtilityFunctions::print("Function call: " + String(function_name));
 
 namespace rapier2d {
 

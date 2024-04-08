@@ -206,7 +206,8 @@ impl PhysicsWorld {
 		let (collision_send, collision_recv) = crossbeam::channel::unbounded();
 		let (contact_force_send, contact_force_recv) = crossbeam::channel::unbounded();
 		let event_handler = ContactEventHandler::new(collision_send, contact_force_send);
-        self.physics_pipeline.step(
+        
+		self.physics_pipeline.step(
           &gravity,
           &integration_parameters,
           &mut self.island_manager,
@@ -221,6 +222,7 @@ impl PhysicsWorld {
           &physics_hooks,
           &event_handler,
         );
+
 		
 		if self.active_body_callback.is_some() {
 			let callback = self.active_body_callback.unwrap();
