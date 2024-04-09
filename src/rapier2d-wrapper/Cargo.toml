@@ -20,10 +20,6 @@ wasm-bindgen = ["rapier2d/wasm-bindgen", "rapier2d-f64/wasm-bindgen"]
 parallel = ["rapier2d/parallel", "rapier2d-f64/parallel"]
 
 [dependencies]
-# Revert this when changes to parry enter mainstream
-# rapier2d = { features = [ "simd-stable"] }
-
-# This changes the parry contacts to work even in some weird cases where in main branch it would return None
 rapier2d = {git = "https://github.com/dimforge/rapier", branch = "master"}
 rapier2d-f64 = {git = "https://github.com/dimforge/rapier", branch = "master"}
 
