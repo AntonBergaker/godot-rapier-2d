@@ -1,6 +1,6 @@
 cd src/rapier2d-wrapper
 rmdir target/debug
-#export EMCC_FORCE_STDLIBS=1
+export EMCC_FORCE_STDLIBS=1
 export RUSTFLAGS="-C target-feature=+atomics,+bulk-memory"
 cargo +nightly build --features="single,wasm-bindgen" --target=wasm32-unknown-emscripten -Z build-std=panic_abort,std
 mv target/wasm32-unknown-emscripten/debug/librapier2d_wrapper.a target/debug/librapier2d_wrapper.a
